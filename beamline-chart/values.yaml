@@ -1,23 +1,23 @@
-# default values for all IOCs on blxxi
+# default values for all IOCs on bl01t
 exports:
   beamline_defaults:
-    beamline: blxxi
+    beamline: bl01t
     # uncomment to force the service account, leave commented for namespace default
-    # serviceAccount: blxxi-priv
+    # serviceAccount: bl01t-priv
 
     # NOTE: the following are all beamline defaults that can be overridden in
     # individual IOC values.yaml files.
 
     # for RTEMS IOCS this is the PVC name for the filesystem where RTEMS
     # IOCs look for their files
-    nfsv2TftpClaim: blxxi-ioc-files-claim
+    nfsv2TftpClaim: bl01t-ioc-files-claim
 
     # provide a PVC for autosave
     autosave: true
 
     hostNetwork: true
 
-    # useAffinity - when true, only run on nodes with label beamline:blxxi
+    # useAffinity - when true, only run on nodes with label beamline:bl01t
     useAffinity: false
 
     # some beamline default resource limits

@@ -1,7 +1,7 @@
 base_image: ghcr.io/epics-containers/ioc-adsimdetector-linux-runtime:23.3.4
 
 # PV Prefix if different from 'name' in Chart.yaml (name must be lower case)
-prefix: BLXXI-EA-IOC-01
+prefix: hgv27681-EA-IOC-01
 #
 ################################################################################
 #

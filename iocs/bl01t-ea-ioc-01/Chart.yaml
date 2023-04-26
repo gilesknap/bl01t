@@ -1,5 +1,5 @@
 apiVersion: v2
-name: blxxi-ea-ioc-01
+name: bl01t-ea-ioc-01
 description: |
   An example IOC with a simulated area detector camera
 

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: beamline-chart
 description: |
-  IOC for the blxxi test beamline
+  IOC for the bl01t test beamline
 
 type: application
 

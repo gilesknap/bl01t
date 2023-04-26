@@ -228,8 +228,8 @@ noScroll
 numDsps 2
 sizeOfs 5
 symbols {
-  0 "P=BLXXI-EA-TST-01,R=:CAM:,label=CAM"
-  1 "P=BLXXI-EA-TST-01,R=:PVA:,label=PVA"
+  0 "P=hgv27681-EA-TST-01,R=:CAM:,label=CAM"
+  1 "P=hgv27681-EA-TST-01,R=:PVA:,label=PVA"
 }
 topShadowColor index 0
 endObjectProperties
