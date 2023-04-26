@@ -10,7 +10,7 @@ exports:
 
     # for RTEMS IOCS this is the PVC name for the filesystem where RTEMS
     # IOCs look for their files
-    nfsv2TftpClaim: bl01t-ioc-files-claim
+    # nfsv2TftpClaim: bl01t-ioc-files-claim
 
     # provide a PVC for autosave
     autosave: true
