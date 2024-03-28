@@ -1,0 +1,16 @@
+epics-opis:
+
+
+  # the beamline name - only set for beamlines
+  beamline: bl01t
+  # the location where the IOCs will run - same as beamline for beamlines
+  ioc_group: bl01t
+  # the name of the repository in which the IOC is grouped
+  location: bl01t
+
+  # useAffinity - only run on nodes with label beamline:<beamline-name>
+  # or location:<location-name>
+  # Comment out useAffiniity for dedicated cluster, set to true for shared cluster
+  
+
+  # extra toleration for the shared cluster training rigs
