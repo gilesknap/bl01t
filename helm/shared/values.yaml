@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://github.com/epics-containers/ec-helm-charts/releases/download/3.4.4/ioc-instance.schema.json#/$defs/repo
 # default values for all IOCs on bl01t
 ioc-instance:
 
@@ -20,15 +21,6 @@ ioc-instance:
   # or location:<location-name>
   # Comment out useAffiniity for dedicated cluster, set to true for shared cluster
   
-
-  # root folder for ioc source/binaries inside generic IOC container
-  iocFolder: /epics/ioc
-  iocConfig: /epics/ioc/config
-  # scripts for controlling the IOC
-  start: /epics/ioc/start.sh
-  stop: /epics/ioc/stop.sh
-  liveness: /epics/ioc/liveness.sh
-
 
   # The following are added to the pod's environment and are shared by all
   # IOCs. TODO - these defaults are for a lab crate in DLS - if you have
