@@ -3,42 +3,37 @@ services:
     image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
     volumes:
       - ./services/bl01t-ea-test-01/config:/epics/ioc/config
-      - type: volume
-        source: opi
-        target: /epics/opi
-        volume:
-          subpath: bl01t-di-test-01
+      - opi:/epics/opi/
     networks:
-      - channel-access
+      - channel_access
     tty: true
     stdin_open: true
   bl01t-ea-test-02:
     image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
     volumes:
       - ./services/bl01t-ea-test-01/config:/epics/ioc/config
-      - type: volume
-        source: opi
-        target: /epics/opi
-        volume:
-          subpath: bl01t-di-test-02
+      - opi:/epics/opi/
+      # - type: volume
+      #   source: opi
+      #   target: /epics/opi
+      #   volume:
+      #     subpath: bl01t-di-test-02
     network_mode: "host"
     tty: true
     stdin_open: true
   bl01t-di-cam-01:
     image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
     networks:
-      - channel-access
+      - channel_access
     volumes:
       - ./services/bl01t-di-cam-01/config:/epics/ioc/config
-      - type: bind
-        source: ./opi/bl01t-di-cam-01
-        target: /epics/opi/
+      - opi:/epics/opi/
     tty: true
     stdin_open: true
   epics-opis:
     image: "nginx:1.25.4"
     networks:
-      - channel-access
+      - channel_access
     volumes:
       - opi:/opi
   phoebus:
@@ -46,19 +41,21 @@ services:
     environment:
       DISPLAY: $DISPLAY
     tty: true
-    command: phoebus-product/phoebus.sh -resource /opi/bl01t-di-cam-01/index.bob
+    command: phoebus-product/phoebus.sh -resource /opi/index.bob
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ~/.Xauthority:/root/.Xauthority
-      - ./opi:/opi
+      - opi:/opi
     # for X11 to work we need to run as the same UID as the host
     # IMPORTANT: set UIDGID to your host user:group e.g. 1000:1000
     # BUT: always to 0:0 if you are using podman
     user: ${UIDGID}
-    network_mode: "host"
+    networks:
+      - channel_access
+    #network_mode: "host"
 volumes:
   opi:
 networks:
   # for example IOCs, we use a custom network for all services so that CA
   # is isolated to the current machine
-  channel-access:
+  channel_access:
