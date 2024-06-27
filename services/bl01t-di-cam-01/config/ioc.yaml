@@ -7,14 +7,11 @@ entities:
   - type: ADSimDetector.simDetector
     PORT: DET.DET
     P: BL01T-EA-TST-02
-    R: ':DET:'
+    R: ":DET:"
 
   - type: ADCore.NDPvaPlugin
     PORT: DET.PVA
     PVNAME: BL01T-EA-TST-02:PVA:OUTPUT
     P: BL01T-EA-TST-02
-    R: ':PVA:'
+    R: ":PVA:"
     NDARRAY_PORT: DET.DET
-
-  - type: epics.StartupCommand
-    command: dbLoadRecords(config/extra.db)

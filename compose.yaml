@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+  bl01t-ea-test-01:
+    image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
+    volumes:
+      - ./services/bl01t-ea-test-01/config:/epics/ioc/config
+      - opi:/epics/opi
+    networks:
+      - channel-access
+  bl01t-di-cam-01:
+    image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
+    networks:
+      - channel-access
+    volumes:
+      - ./services/bl01t-di-cam-01/config:/epics/ioc/config
+      - opi:/epics/opi
+  epics-opis:
+    image: "nginx:1.25.4"
+    networks:
+      - channel-access
+    volumes:
+      - opi:/opi
+  phoebus:
+    image: "ghcr.io/epics-containers/ec-phoebus:latest"
+    environment:
+      DISPLAY: $DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+      - opi:/opi
+    network_mode: "host"
+volumes:
+  opi:
+networks:
+  # for example IOCs, we use a custom network for all services so that CA
+  # is isolated to the current machine
+  channel-access:

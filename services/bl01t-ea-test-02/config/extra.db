@@ -1,6 +1,0 @@
-record(ai, "bl01t-ea-test-02:TEST") {
-   field(DESC, "Test record")
-   field(DTYP, "Soft Channel")
-   field(SCAN, "Passive")
-   field(VAL, "1")
-}
