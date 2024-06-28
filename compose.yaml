@@ -17,7 +17,11 @@
 # constraints I can find - thus you cannot use port openning to enable
 # the virtual circuit creation
 # see https://docs.epics-controls.org/en/latest/internal/ca_protocol.html#overall-server-operation
-
+#
+# An additional thorn is that running X11 forwarding to inside a container
+# network works for both podman/docker on ubuntu but is failing on DLS workstations
+# with podman.
+# THUS I HAVE NO SOLUTION FOR DLS WORKSTATIONS.
 
 services:
 
