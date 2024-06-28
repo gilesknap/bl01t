@@ -1,13 +1,36 @@
 services:
+
+  ca-gateway:
+    image: pklaus/ca-gateway
+    container_name: ca-gateway
+    expose:
+      - "5064-5065/udp"
+      - "5064-5065"
+    ports:
+      - "5064-5065:5064-5065/udp"
+      - "5064-5065:5064-5065"
+    restart: always
+    networks:
+      # the network that's alphabetically first will be the one with the forwarded ports
+      a_epics_supervisory:
+        ipv4_address: 172.100.255.254
+      epics_field:
+        ipv4_address: 172.20.255.254
+    volumes:
+      - ./_conf/access:/access:ro
+      - ./_conf/pvlist:/pvlist:ro
+    command: -sip 172.100.255.254 -cip 172.20.255.255 -pvlist /pvlist -access /access -log /dev/stdout -debug 1
+
   bl01t-ea-test-01:
     image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
     volumes:
       - ./services/bl01t-ea-test-01/config:/epics/ioc/config
       - opi:/epics/opi/
     networks:
-      - channel_access
+      - epics_field
     tty: true
     stdin_open: true
+
   bl01t-ea-test-02:
     image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
     volumes:
@@ -21,21 +44,27 @@ services:
     network_mode: "host"
     tty: true
     stdin_open: true
+
   bl01t-di-cam-01:
     image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
-    networks:
-      - channel_access
     volumes:
       - ./services/bl01t-di-cam-01/config:/epics/ioc/config
       - opi:/epics/opi/
     tty: true
     stdin_open: true
+    expose:
+      - "5064-5065/udp"
+      - "5064-5065"
+    networks:
+      - epics_field
+
   epics-opis:
     image: nginx:1.27
     networks:
-      - channel_access
+      - epics_field
     volumes:
       - opi:/opi
+
   phoebus:
     image: "ghcr.io/epics-containers/ec-phoebus:latest"
     environment:
@@ -50,12 +79,23 @@ services:
     # IMPORTANT: set UIDGID to your host user:group e.g. 1000:1000
     # BUT: always to 0:0 if you are using podman
     user: ${UIDGID}
-    networks:
-      - channel_access
-    # network_mode: "host"
+    # X11 forwarding works without net host - just not at DLS for some reason
+    network_mode: "host"
+
 volumes:
   opi:
+
 networks:
-  # for example IOCs, we use a custom network for all services so that CA
-  # is isolated to the current machine
-  channel_access:
+
+  # alphabetically first, so that port forwardings get to this network
+  a_epics_supervisory:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.100.0.0/16"
+
+  epics_field:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/16"
