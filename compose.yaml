@@ -11,15 +11,12 @@ services:
       - "5064-5065:5064-5065"
     restart: always
     networks:
-      # the network that's alphabetically first will be the one with the forwarded ports
-      a_epics_supervisory:
-        ipv4_address: 172.100.255.254
-      epics_field:
+      channel_access:
         ipv4_address: 172.20.255.254
     volumes:
       - ./_conf/access:/access:ro
       - ./_conf/pvlist:/pvlist:ro
-    command: -sip 172.100.255.254 -cip 172.20.255.255 -pvlist /pvlist -access /access -log /dev/stdout -debug 1
+    command: -cip 172.20.255.255 -pvlist /pvlist -access /access -log /dev/stdout -debug 1
 
   bl01t-ea-test-01:
     image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
@@ -27,21 +24,7 @@ services:
       - ./services/bl01t-ea-test-01/config:/epics/ioc/config
       - opi:/epics/opi/
     networks:
-      - epics_field
-    tty: true
-    stdin_open: true
-
-  bl01t-ea-test-02:
-    image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
-    volumes:
-      - ./services/bl01t-ea-test-01/config:/epics/ioc/config
-      - opi:/epics/opi/
-      # - type: volume
-      #   source: opi
-      #   target: /epics/opi
-      #   volume:
-      #     subpath: bl01t-di-test-02
-    network_mode: "host"
+      - channel_access
     tty: true
     stdin_open: true
 
@@ -52,16 +35,13 @@ services:
       - opi:/epics/opi/
     tty: true
     stdin_open: true
-    expose:
-      - "5064-5065/udp"
-      - "5064-5065"
     networks:
-      - epics_field
+      - channel_access
 
   epics-opis:
-    image: nginx:1.27
+    image: docker.io/nginx:1.27
     networks:
-      - epics_field
+      - channel_access
     volumes:
       - opi:/opi
 
@@ -86,15 +66,7 @@ volumes:
   opi:
 
 networks:
-
-  # alphabetically first, so that port forwardings get to this network
-  a_epics_supervisory:
-    ipam:
-      driver: default
-      config:
-        - subnet: "172.100.0.0/16"
-
-  epics_field:
+  channel_access:
     ipam:
       driver: default
       config:
