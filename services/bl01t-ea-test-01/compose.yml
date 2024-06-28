@@ -1,17 +1,18 @@
 services:
-  bl01t-di-cam-01:
+  bl01t-ea-test-01:
     extends:
       service: ioc
       file: ../../include/ioc.yml
     image: ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1
     volumes:
       - ./config:/epics/ioc/config
+      # TODO can we create the subfolders with an init container?
       # - type: volume
       #   source: opi
       #   target: /epics/opi
       #   volume:
       #     nocopy: true
-      #     subpath: bl01t-di-cam-01
+      #     subpath: bl01t-ea-test-01
 
 include:
   - include/networks.yml
