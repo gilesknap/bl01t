@@ -1,0 +1,10 @@
+services:
+  bl01t-di-cam-01:
+    extends:
+      service: ioc
+      file: ../../include/ioc.yml
+    image: ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1
+
+include:
+  - ../../include/network.yml
+  - ../../include/volumes.yml

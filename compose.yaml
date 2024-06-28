@@ -1,27 +1,4 @@
-# To make this work for both podman and docker by sharing the network
-# namespace between all IOCs and phoebus. Not a great solution.
-#   use `channel_access` network in bl01t-ea-test-01.
-#   add `network_mode: service:bl01t-ea-test-01`.
-# this run phoebus inside the container
-#   podman does not need the shared network namespace and I believe this
-#   is because all containers have the same IP but docker containers
-#   are bridged to each other via NAT.
-#
-# perhaps the tidiest solution is to run phoebus inside for podman
-# and with host=net for docker. Again I'm not too sure why this works for docker,
-# but certainly docker container IPs are routable (and broadcastable) from the
-# host and apparently this means all ports are open to the host.
-#
-# The key issue with CA is that the search response contains a random PORT
-# for the virtual circuit to be set up and this random port has no range
-# constraints I can find - thus you cannot use port openning to enable
-# the virtual circuit creation
-# see https://docs.epics-controls.org/en/latest/internal/ca_protocol.html#overall-server-operation
-#
-# An additional thorn is that running X11 forwarding to inside a container
-# network works for both podman/docker on ubuntu but is failing on DLS workstations
-# with podman.
-# THUS I HAVE NO SOLUTION FOR DLS WORKSTATIONS.
+
 
 services:
 

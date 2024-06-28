@@ -1,0 +1,11 @@
+services:
+
+  ioc:
+    volumes:
+      - ./config:/epics/ioc/config
+      - opi:/epics/opi/
+    tty: true
+    stdin_open: true
+    networks:
+      - channel_access
+
