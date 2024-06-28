@@ -1,42 +1,44 @@
+# To make this work for both podman and docker by sharing the network
+# namespace between all IOCs and phoebus. Not a great solution.
+#   use `channel_access` network in bl01t-ea-test-01.
+#   add `network_mode: service:bl01t-ea-test-01`.
+# this run phoebus inside the container
+#   podman does not need the shared network namespace and I believe this
+#   is because all containers have the same IP but docker containers
+#   are bridged to each other via NAT.
+#
+# perhaps the tidiest solution is to run phoebus inside for podman
+# and with host=net for docker. Again I'm not too sure why this works for docker,
+# but certainly docker container IPs are routable (and broadcastable) from the
+# host and apparently this means all ports are open to the host.
+#
+# The key issue with CA is that the search response contains a random PORT
+# for the virtual circuit to be set up and this random port has no range
+# constraints I can find - thus you cannot use port openning to enable
+# the virtual circuit creation
+# see https://docs.epics-controls.org/en/latest/internal/ca_protocol.html#overall-server-operation
+
+
 services:
 
-  ca-gateway:
-    image: pklaus/ca-gateway
-    container_name: ca-gateway
-    expose:
-      - "5064-5065/udp"
-      - "5064-5065"
-    ports:
-      - "5064-5065:5064-5065/udp"
-      - "5064-5065:5064-5065"
-    restart: always
-    networks:
-      channel_access:
-        ipv4_address: 172.20.255.254
-    volumes:
-      - ./_conf/access:/access:ro
-      - ./_conf/pvlist:/pvlist:ro
-    command: -cip 172.20.255.255 -pvlist /pvlist -access /access -log /dev/stdout -debug 1
-
   bl01t-ea-test-01:
-    image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
+    image: ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1
     volumes:
       - ./services/bl01t-ea-test-01/config:/epics/ioc/config
       - opi:/epics/opi/
-    networks:
-      - channel_access
     tty: true
     stdin_open: true
+    networks:
+      - channel_access
 
   bl01t-di-cam-01:
-    image: "ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1"
+    image: ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1
     volumes:
       - ./services/bl01t-di-cam-01/config:/epics/ioc/config
       - opi:/epics/opi/
     tty: true
     stdin_open: true
-    networks:
-      - channel_access
+    network_mode: service:bl01t-ea-test-01
 
   epics-opis:
     image: docker.io/nginx:1.27
@@ -46,7 +48,7 @@ services:
       - opi:/opi
 
   phoebus:
-    image: "ghcr.io/epics-containers/ec-phoebus:latest"
+    image: ghcr.io/epics-containers/ec-phoebus:latest
     environment:
       DISPLAY: $DISPLAY
     tty: true
@@ -60,7 +62,8 @@ services:
     # BUT: always to 0:0 if you are using podman
     user: ${UIDGID}
     # X11 forwarding works without net host - just not at DLS for some reason
-    network_mode: "host"
+    # network_mode: "host"
+    network_mode: service:bl01t-ea-test-01
 
 volumes:
   opi:
