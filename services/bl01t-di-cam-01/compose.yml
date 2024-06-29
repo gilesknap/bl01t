@@ -18,8 +18,13 @@ services:
       IOC_NAME: bl01t-di-cam-01
       IOC_PREFIX: BL01T-DI-CAM-01
 
-    volumes:
-      - ./config:/epics/ioc/config
+    configs:
+      - source: bl01t-di-cam-01_config
+        target: epics/ioc/config
+
+configs:
+  bl01t-di-cam-01_config:
+    file: ./config
 
 include:
   - include/networks.yml

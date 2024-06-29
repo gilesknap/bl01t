@@ -3,6 +3,8 @@
 # 1. Use host network so their PVs available on the subnet
 # 2. Run a ca-gateway on each server and add all servers to client's
 #    EPICS_CA_ADDR_LIST
+#
+# at present the only available option for podman is to use host network
 
 services:
 
@@ -19,10 +21,16 @@ services:
     networks:
       channel_access:
         ipv4_address: 172.20.255.254
-    volumes:
-      - ./config/access:/access:ro
-      - ./config/pvlist:/pvlist:ro
-    command: -cip 172.20.255.255 -pvlist /pvlist -access /access -log /dev/stdout -debug 1
+
+    configs:
+      - source: ca-gateway_config
+        target: /config
+
+    command: -cip 172.20.255.255 -pvlist /config/pvlist -access /config/access -log /dev/stdout -debug 1
 
     profiles:
       - deploy
+
+configs:
+  ca-gateway_config:
+    file: ./config
