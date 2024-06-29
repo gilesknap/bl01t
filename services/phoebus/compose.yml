@@ -1,5 +1,5 @@
-# for development and testing it is useful to bring up phoebus to interact
-# with the local IOCs PVs.
+# for development and testing it is useful to bring up phoebus instanced to
+# interact with the local IOCs PVs.
 
 services:
   phoebus:
