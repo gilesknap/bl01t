@@ -1,31 +1,24 @@
+# the top level compose file represents a set of IOCs that would be deployed
+# to a given IOC server
+#
+# For the example this is a single compose file. However, if you wanted to keep
+# all IOCs for a beamline in a single repo but deploy to multiple servers,
+# then each server would have its own named compose file
 
-
-services:
-
-  epics-opis:
-    image: docker.io/nginx:1.27
-    networks:
-      - channel_access
-    volumes:
-      - opi:/opi
-
-  phoebus:
-    image: ghcr.io/epics-containers/ec-phoebus:latest
-    environment:
-      DISPLAY: $DISPLAY
-    tty: true
-    command: phoebus-product/phoebus.sh -resource /opi/index.bob
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - ~/.Xauthority:/root/.Xauthority
-      - opi:/opi
-    # for X11 to work we need to run as the same UID as the host
-    # IMPORTANT: set UIDGID to your host user:group e.g. 1000:1000
-    # BUT: always to 0:0 if you are using podman
-    user: ${UIDGID}
-    network_mode: "host"
+# to deploy IOCs to the local machine clone this repo and use the following:
+#  export COMPOSE_PROFILES=deploy
+#  docker compose up --detach
 
 include:
+  # all profiles
   - services/bl01t-di-cam-01/compose.yml
   - services/bl01t-ea-test-01/compose.yml
+
+  # develop profile only
+  - services/phoebus/compose.yml
+
+  # deploy profile only
+  - services/gateway/compose.yml
+  - services/epics-opis/compose.yml
+
 

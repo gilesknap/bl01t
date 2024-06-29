@@ -1,17 +1,25 @@
 services:
+
   bl01t-di-cam-01:
+
     extends:
-      service: ioc
+      service: linux_ioc
       file: ../../include/ioc.yml
+
     image: ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1
+
+    labels:
+      # this should be incremented when changes are made to this file
+      # (TODO: can we enforce/automate this?)
+      version: 0.1.0
+
+    environment:
+      IOCSH_PS1: bl01t-di-cam-01 >
+      IOC_NAME: bl01t-di-cam-01
+      IOC_PREFIX: BL01T-DI-CAM-01
+
     volumes:
       - ./config:/epics/ioc/config
-      # - type: volume
-      #   source: opi
-      #   target: /epics/opi
-      #   volume:
-      #     nocopy: true
-      #     subpath: bl01t-di-cam-01
 
 include:
   - include/networks.yml

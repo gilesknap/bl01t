@@ -1,0 +1,28 @@
+# When deploying IOCs to a server with docker, the choice is:
+#
+# 1. Use host network so their PVs available on the subnet
+# 2. Run a ca-gateway on each server and add all servers to client's
+#    EPICS_CA_ADDR_LIST
+
+services:
+
+  ca-gateway:
+    image: docker.io/pklaus/ca-gateway
+    container_name: ca-gateway
+    expose:
+      - "5064-5065/udp"
+      - "5064-5065"
+    ports:
+      - "5064-5065:5064-5065/udp"
+      - "5064-5065:5064-5065"
+    restart: unless-stopped
+    networks:
+      channel_access:
+        ipv4_address: 172.20.255.254
+    volumes:
+      - ./config/access:/access:ro
+      - ./config/pvlist:/pvlist:ro
+    command: -cip 172.20.255.255 -pvlist /pvlist -access /access -log /dev/stdout -debug 1
+
+    profiles:
+      - deploy
