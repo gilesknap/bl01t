@@ -39,3 +39,4 @@ These goals for switching to compose have all been met:
     - a ca-gateway
 - structure so that there is a compose file per server
 - remove need for custom code/scripts to deploy/manage the IOCs
+- also allow PV isolation on servers with a ca-gateway to enable access
