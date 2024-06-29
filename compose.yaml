@@ -12,6 +12,9 @@
 #  docker compose --profile deploy -f my_server_01.yml up --detach
 
 include:
+  # initialise volumes
+  - include/init.yml
+
   # all profiles
   - services/bl01t-di-cam-01/compose.yml
   - services/bl01t-ea-test-01/compose.yml

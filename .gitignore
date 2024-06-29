@@ -6,6 +6,5 @@
 **/*.bob
 edm/bobs
 **/*copy
-opi/*
 venv*
 .venv*

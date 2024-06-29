@@ -1,0 +1,26 @@
+# A basic init service that sets up volumes for the IOCs described in
+# this repo.
+#
+# At present this is just making sure the opi volume has a subfolder for
+# each service and copies in any hand coded opis to those folders.
+
+services:
+
+  init_iocs:
+
+    image: docker.io/busybox
+
+    command: |
+      sh /repo/include/init.sh
+
+    labels:
+      ioc_group: bl01t
+      is_ioc: false
+      location: localhost
+
+    tty: true
+    stdin_open: true
+
+    volumes:
+      - opi:/opi/
+      - ..:/repo

@@ -18,6 +18,14 @@ services:
       IOC_NAME: bl01t-di-cam-01
       IOC_PREFIX: BL01T-DI-CAM-01
 
+    volumes:
+      - type: volume
+        source: opi
+        target: /epics/opi
+        volume:
+          nocopy: true
+          subpath: bl01t-di-cam-01
+
     configs:
       - source: bl01t-di-cam-01_config
         target: epics/ioc/config

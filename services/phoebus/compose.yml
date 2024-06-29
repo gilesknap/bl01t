@@ -7,7 +7,7 @@ services:
     environment:
       DISPLAY: $DISPLAY
     tty: true
-    command: phoebus-product/phoebus.sh -resource /opi/index.bob
+    command: phoebus-product/phoebus.sh -resource /opi/bl01t-di-cam-01/index.bob
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ~/.Xauthority:/root/.Xauthority
