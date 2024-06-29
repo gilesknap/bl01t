@@ -8,20 +8,27 @@ This repository holds the a definition of beamline bl01t IOC Instances and servi
 
 ## deploying IOCs
 
+At DLS, first enable docker compose:
+```bash
+module load docker-compose
+ln -s /usr/bin/podman ~/bin/docker
+```
+
 To deploy IOCs to a server, clone this repo and run the following command from the repo root:
 
 ```bash
-docker-compose --profile deploy up --detach
+docker compose --profile deploy up --detach
 ```
 
 or for a multiple server repo:
 ```bash
-docker-compose --profile deploy -f my_server_01.yml up --detach
+docker compose --profile deploy -f my_server_01.yml up --detach
 ```
 
 To launch a development environment on a workstation, including phoebus:
 ```bash
-UIDGID=0:0 COMPOSE_PROFILE=develop docker-compose up
+export UIDGID=0:0 COMPOSE_PROFILES=develop
+docker compose up
 ```
 (UIDGID should be 0:0 for podman and your user id/gid for docker)
 
