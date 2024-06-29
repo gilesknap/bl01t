@@ -32,8 +32,12 @@ services:
 
     tty: true
     stdin_open: true
-    networks:
-      - channel_access
+
+    # for docker use 'networks: [channel_access]'
+    # for podman at DLS use 'network_mode: host'
+    network_mode: host
+    # networks:
+    #   - channel_access
 
     volumes:
       - opi:/epics/opi/
