@@ -12,10 +12,12 @@ services:
     image: docker.io/pklaus/ca-gateway
     container_name: ca-gateway
     expose:
+      # podman gets 'rootlessport listen udp 0.0.0.0:5065: bind: address already in use'
+      # when we add the 5065 port here - TODO, diagnose
       - "5064-5065/udp"
       - "5064-5065"
     ports:
-      - "5064-5065:5064-5065/udp"
+      - "5064:5064/udp"
       - "5064-5065:5064-5065"
     restart: unless-stopped
     networks:
@@ -30,6 +32,7 @@ services:
 
     profiles:
       - deploy
+      - develop
 
 configs:
   ca-gateway_config:

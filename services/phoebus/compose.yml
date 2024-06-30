@@ -16,8 +16,10 @@ services:
     # IMPORTANT: set UIDGID to your host user:group e.g. 1000:1000
     # BUT: always to 0:0 if you are using podman
     user: ${UIDGID}
-    networks:
-      - channel_access
+
+    # network host with a gateway for CA is the most reliable way to
+    # get X11 forwarding to work - even with ssh->container
+    network_mode: host
 
     profiles:
       - develop

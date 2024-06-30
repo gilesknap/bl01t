@@ -3,10 +3,8 @@
 # For use with 'extends' in each individual IOC service description
 
 services:
-
- # linux IOCs that run in a container ##########################################
+  # linux IOCs that run in a container #########################################
   linux_ioc: &linux_ioc
-
     depends_on:
       - init_iocs
 
@@ -43,12 +41,12 @@ services:
       - "5064-5065/udp"
       - "5064-5065"
 
-# proxy services that each manage an RTEMS hard IOC ############################
+  # proxy services that each manage an RTEMS hard IOC ##########################
   rtems_ioc:
-
-    # use an alias to copy all of the linux_ioc spec and add RTEMS environment
+    # use an alias to copy all of the linux_ioc spec
     <<: *linux_ioc
 
+    # and add RTEMS environment variables
     environment:
       RTEMS_ROOT_NFS: /nfsv2-tftp
       RTEMS_ROOT_TFTP: /nfsv2-tftp
@@ -58,7 +56,3 @@ services:
       # But may need to move these to individual IOCs for the Machine.
       RTEMS_IOC_NETMASK": 255.255.240.0
       RTEMS_IOC_GATEWAY": 172.23.240.254
-
-
-
-
