@@ -7,7 +7,7 @@ services:
     environment:
       DISPLAY: $DISPLAY
     tty: true
-    command: phoebus-product/phoebus.sh -resource /opi/index.bob
+    command: phoebus-product/phoebus.sh -settings /config/settings.ini -resource /opi/index.bob
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ~/.Xauthority:/root/.Xauthority
@@ -18,12 +18,17 @@ services:
     user: ${UIDGID}
 
     # network host with a gateway for CA is the most reliable way to
-    # get X11 forwarding to work - even with ssh->container. But I need
-    # to work out how to configure ca-gateway with podman
-    # network_mode: host
-    networks:
-      - channel_access
+    # get X11 forwarding to work - even with ssh->container.
+    network_mode: host
+
+    configs:
+      - source: phoebus_config
+        target: /config
 
     profiles:
       - develop
       - phoebus
+
+configs:
+  phoebus_config:
+    file: ./config
