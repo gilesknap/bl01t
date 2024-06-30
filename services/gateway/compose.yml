@@ -8,16 +8,23 @@
 
 services:
 
-  ca-gateway:
+  # ca-gateway for development #################################################
+
+  ca-gateway-develop: &ca-gateway
+
     image: docker.io/pklaus/ca-gateway
-    container_name: ca-gateway
+
     expose:
-      - "5064-5065/udp"
-      - "5064-5065"
+      - 5064-5065/udp
+      - 5064-5065
+
     ports:
-      - "5064:5064/udp"
-      - "5064-5065:5064-5065"
+      # bind to localhost to isolate channel access to this host only
+      - 127.0.0.1:5064:5064/udp
+      - 127.0.0.1:5064-5065:5064-5065
+
     restart: unless-stopped
+
     networks:
       channel_access:
         ipv4_address: 172.20.255.254
@@ -26,13 +33,26 @@ services:
       - source: ca-gateway_config
         target: /config
 
-    # using sip of localhost for isolation but that's not working with podman
-    command: -sip 127.0.0.1 -cip 172.20.255.255 -pvlist /config/pvlist -access /config/access -log /dev/stdout -debug 1
+    command: -cip 172.20.255.255 -pvlist /config/pvlist -access /config/access -log /dev/stdout -debug 1
 
     profiles:
-    # only deploy explicitly. TODO understand better how to configure with
-    # podman
-      - gateway
+      - develop
+
+  # per server ca-gateway for deployment #######################################
+  ca-gateway-deploy:
+
+    <<: *ca-gateway
+
+    ports:
+    # TODO - drop the IP address but also set up pvlist to make sure there
+    # are no loops - I need to look into safe config for per server ca-gateways
+    - 127.0.0.1:5064:5064/udp
+    - 127.0.0.1:5064-5065:5064-5065
+
+    command: -cip 172.20.255.255 -pvlist /config/pvlist -access /config/access -log /dev/stdout -debug 1
+
+    profiles:
+      - deploy
 
 configs:
   ca-gateway_config:
