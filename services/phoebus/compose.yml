@@ -16,8 +16,9 @@ services:
     # IMPORTANT: set UIDGID to your host user:group e.g. 1000:1000
     # BUT: always to 0:0 if you are using podman
     user: ${UIDGID}
-    networks:
-      - channel_access
+    network_mode: host
+    # networks:
+    #   - channel_access
 
     profiles:
       - develop
