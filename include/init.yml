@@ -13,14 +13,6 @@ services:
     command: |
       sh /repo/include/init.sh
 
-    labels:
-      ioc_group: bl01t
-      is_ioc: false
-      location: localhost
-
-    tty: true
-    stdin_open: true
-
     volumes:
       - opi:/opi/
       - ..:/repo
