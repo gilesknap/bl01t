@@ -23,7 +23,6 @@ services:
         source: opi
         target: /epics/opi
         volume:
-          nocopy: true
           subpath: bl01t-ea-test-01
 
     configs:
