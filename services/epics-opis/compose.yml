@@ -9,8 +9,12 @@ services:
 
   epics-opis:
     image: docker.io/nginx:1.27
+
+    restart: unless-stopped
+
     networks:
       - channel_access
+
     volumes:
       - opi:/opi
 
