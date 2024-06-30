@@ -2,10 +2,6 @@
 #
 # For use with 'extends' in each individual IOC service description
 
-include:
-  - networks.yml
-  - volumes.yml
-
 services:
 
  # linux IOCs that run in a container ##########################################

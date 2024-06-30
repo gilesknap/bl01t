@@ -1,2 +1,5 @@
 volumes:
+  # hand coded opi files from this repo
   opi:
+  # auto generated opi files created by pvi in each IOC
+  opi_auto:

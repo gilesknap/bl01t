@@ -15,4 +15,5 @@ services:
 
     volumes:
       - opi:/opi/
+      - opi_auto:/opi_auto/
       - ..:/repo

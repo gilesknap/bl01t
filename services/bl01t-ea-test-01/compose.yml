@@ -20,7 +20,7 @@ services:
 
     volumes:
       - type: volume
-        source: opi
+        source: opi_auto
         target: /epics/opi
         volume:
           subpath: bl01t-ea-test-01
