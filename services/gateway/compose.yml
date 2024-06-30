@@ -12,8 +12,6 @@ services:
     image: docker.io/pklaus/ca-gateway
     container_name: ca-gateway
     expose:
-      # podman gets 'rootlessport listen udp 0.0.0.0:5065: bind: address already in use'
-      # when we add the 5065 port here - TODO, diagnose
       - "5064-5065/udp"
       - "5064-5065"
     ports:
@@ -28,11 +26,13 @@ services:
       - source: ca-gateway_config
         target: /config
 
-    command: -cip 172.20.255.255 -pvlist /config/pvlist -access /config/access -log /dev/stdout -debug 1
+    # using sip of localhost for isolation but that's not working with podman
+    command: -sip 127.0.0.1 -cip 172.20.255.255 -pvlist /config/pvlist -access /config/access -log /dev/stdout -debug 1
 
     profiles:
-      - deploy
-      - develop
+    # only deploy explicitly. TODO understand better how to configure with
+    # podman
+      - gateway
 
 configs:
   ca-gateway_config:

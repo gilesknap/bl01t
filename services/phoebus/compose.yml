@@ -18,8 +18,11 @@ services:
     user: ${UIDGID}
 
     # network host with a gateway for CA is the most reliable way to
-    # get X11 forwarding to work - even with ssh->container
-    network_mode: host
+    # get X11 forwarding to work - even with ssh->container. But I need
+    # to work out how to configure ca-gateway with podman
+    # network_mode: host
+    networks:
+      - channel_access
 
     profiles:
       - develop
