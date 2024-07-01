@@ -30,20 +30,39 @@ To launch a development environment on a workstation, including phoebus:
 ```bash
 alias ec='podman compose' # just for convenience
 export COMPOSE_PROFILES=develop UIDGID=0:0 EPICS_CA_ADDR_LIST=127.0.0.1
-ec up --detach
+ec up -d
 ```
 (UIDGID should be 0:0 for `podman` or your user id/gid for `docker`)
+
+NOTE: -d detaches from the containers. You may omit this if you would prefer to follow the logs of all the containers - these combinded logs include a colour coded prefix to make them more legible.
+
+You can now use:
+
+```bash
+# attach to logs of a service
+ec logs bl01t-di-cam-01 -f
+# stop a service
+ec stop bl01t-di-cam-01
+# attach to a service stdio
+ec attach bl01t-di-cam-01
+# exec a process in a service
+ec exec bl01t-di-cam-01 bash
+# delete a service (deletes the container)
+ec down bl01t-di-cam-01
+# create and launch a single service (plus its dependencies)
+ec up bl01tt-di-cam-01 -d
+```
 
 ### Deploy To Beamline Servers
 To deploy IOCs to a server, clone this repo and run the following command from the repo root:
 
 ```bash
-podman compose --profile deploy up --detach
+podman compose --profile deploy up -d
 ```
 
 or for a multiple server repo:
 ```bash
-podman compose --profile deploy -f my_server_01.yml up --detach
+podman compose --profile deploy -f my_server_01.yml up -d
 ```
 
 
