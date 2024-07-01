@@ -65,6 +65,9 @@ or for a multiple server repo:
 podman compose --profile deploy -f my_server_01.yml up -d
 ```
 
+IMPORTANT: if you are using docker then IOCs deployed this way will automatically be brought up again on server reboot. podman will not do this by default because it is running in user space - there are workarounds for this but podman is not recommended for this purpose.
+
+The gold standard for orchestrating these containers in production is Kubernetes. See https://epics-containers.github.io/main/tutorials/setup_k8s.html. Although compose is really useful for development and testing, Kubernetes is far superior for managing services across a cluster of hosts.
 
 ## compose goals
 

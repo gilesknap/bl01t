@@ -29,7 +29,7 @@ services:
 
     tty: true
     stdin_open: true
-    restart: unless-stopped
+    restart: always
 
     # for docker use 'networks: [channel_access]'
     # for podman at DLS use 'network_mode: host'
