@@ -8,29 +8,44 @@ This repository holds the a definition of beamline bl01t IOC Instances and servi
 
 ## deploying IOCs
 
-At DLS, first enable docker compose:
+### Initial Setup
+At DLS, first enable `docker compose`:
 ```bash
+# this command must be run every time you want to use compose in a new shell
 module load docker-compose
-ln -s /usr/bin/podman ~/bin/docker
+
+# the remaining commands need only be run once
+
+# these steps will make cli completion work for zsh
+mkdir -p ~/.oh-my-zsh/completions
+podman completion zsh > ~/.oh-my-zsh/completions/_podman
+
+# these steps will make cli completion work for bash
+mkdir -p ~/.local/share/bash-completion/completions
+podman completion bash > ~/.local/share/bash-completion/completions/podman
 ```
 
+### Local Developer Environment
+To launch a development environment on a workstation, including phoebus:
+```bash
+alias ec='podman compose' # just for convenience
+export COMPOSE_PROFILES=develop UIDGID=0:0 EPICS_CA_ADDR_LIST=127.0.0.1
+ec up --detach
+```
+(UIDGID should be 0:0 for `podman` or your user id/gid for `docker`)
+
+### Deploy To Beamline Servers
 To deploy IOCs to a server, clone this repo and run the following command from the repo root:
 
 ```bash
-docker compose --profile deploy up --detach
+podman compose --profile deploy up --detach
 ```
 
 or for a multiple server repo:
 ```bash
-docker compose --profile deploy -f my_server_01.yml up --detach
+podman compose --profile deploy -f my_server_01.yml up --detach
 ```
 
-To launch a development environment on a workstation, including phoebus:
-```bash
-export UIDGID=0:0 COMPOSE_PROFILES=develop
-docker compose up
-```
-(UIDGID should be 0:0 for podman and your user id/gid for docker)
 
 ## compose goals
 
