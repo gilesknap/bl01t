@@ -25,9 +25,17 @@ mkdir -p ~/.local/share/bash-completion/completions
 podman completion bash > ~/.local/share/bash-completion/completions/podman
 ```
 
+Some users who have set up podman sockets in the past may get errors with `module load docker-compose`. If you do then do the following and then re-run it.
+```bash
+/dls_sw/apps/setup-podman/setup.sh
+sed -i ~/.config/containers/containers.conf -e '/label=false/d' -e '/^\[containers\]$/a label=false'
+```
+
 ### Local Developer Environment
 To launch a development environment on a workstation, including phoebus:
 ```bash
+git clone git@github.com:gilesknap/bl01t.git
+cd bl01t
 alias ec='podman compose' # just for convenience
 export COMPOSE_PROFILES=develop UIDGID=0:0 EPICS_CA_ADDR_LIST=127.0.0.1
 ec up -d
@@ -50,7 +58,7 @@ ec exec bl01t-di-cam-01 bash
 # delete a service (deletes the container)
 ec down bl01t-di-cam-01
 # create and launch a single service (plus its dependencies)
-ec up bl01tt-di-cam-01 -d
+ec up bl01t-di-cam-01 -d
 ```
 
 ### Deploy To Beamline Servers
