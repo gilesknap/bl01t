@@ -32,7 +32,8 @@ sed -i ~/.config/containers/containers.conf -e '/label=false/d' -e '/^\[containe
 ```
 
 ### Local Developer Environment
-To launch a development environment on a workstation, including phoebus:
+To launch a development environment on a workstation, including phoebus perform the following steps:
+
 ```bash
 git clone git@github.com:gilesknap/bl01t.git
 cd bl01t
