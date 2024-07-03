@@ -36,7 +36,7 @@ To launch a development environment on a workstation, including phoebus:
 ```bash
 git clone git@github.com:gilesknap/bl01t.git
 cd bl01t
-alias ec='podman compose' # just for convenience
+alias ec='podman compose' # or docker compose. This is just for convenience
 export COMPOSE_PROFILES=develop UIDGID=0:0 EPICS_CA_ADDR_LIST=127.0.0.1
 ec up -d
 ```
