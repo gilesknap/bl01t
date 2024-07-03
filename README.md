@@ -47,6 +47,9 @@ NOTE: -d detaches from the containers. You may omit this if you would prefer to 
 You can now use:
 
 ```bash
+# use caget/put locally
+export EPICS_CA_ADDR_LIST=127.0.0.1
+caget BL01T-EA-TST-02:DET:MaxSizeX_RBV
 # attach to logs of a service
 ec logs bl01t-di-cam-01 -f
 # stop a service
@@ -59,6 +62,9 @@ ec exec bl01t-di-cam-01 bash
 ec down bl01t-di-cam-01
 # create and launch a single service (plus its dependencies)
 ec up bl01t-di-cam-01 -d
+# close down and delete all the containers
+# volumes are not deleted to preserve the data
+ec down
 ```
 
 ### Deploy To Beamline Servers
