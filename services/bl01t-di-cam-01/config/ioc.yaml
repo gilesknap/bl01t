@@ -6,12 +6,12 @@ description: Example simulated camera for BL01T
 entities:
   - type: ADSimDetector.simDetector
     PORT: DET.DET
-    P: BL01T-EA-TST-02
+    P: "{{ _global.get_env('IOC_PREFIX') }}"
     R: ":DET:"
 
   - type: ADCore.NDPvaPlugin
     PORT: DET.PVA
-    PVNAME: BL01T-EA-TST-02:PVA:OUTPUT
-    P: BL01T-EA-TST-02
+    PVNAME: "{{ _global.get_env('IOC_PREFIX') }}:PVA:OUTPUT"
+    P: "{{ _global.get_env('IOC_PREFIX') }}"
     R: ":PVA:"
     NDARRAY_PORT: DET.DET

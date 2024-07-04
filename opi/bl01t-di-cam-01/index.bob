@@ -42,12 +42,12 @@
         <target>tab</target>
         <description>Open Display</description>
         <macros>
-          <P>BL01T-EA-TST-02</P>
+          <P>BL01T-DI-CAM-01</P>
           <R>:DET:</R>
         </macros>
       </action>
     </actions>
-    <text>BL01T-EA-TST-02 :DET:</text>
+    <text>BL01T-DI-CAM-01:DET:</text>
     <x>178</x>
     <y>30</y>
     <width>205</width>
@@ -71,12 +71,12 @@
         <target>tab</target>
         <description>Open Display</description>
         <macros>
-          <P>BL01T-EA-TST-02</P>
+          <P>BL01T-DI-CAM-01</P>
           <R>:PVA:</R>
         </macros>
       </action>
     </actions>
-    <text>BL01T-EA-TST-02 :PVA:</text>
+    <text>BL01T-DI-CAM-01:PVA:</text>
     <x>178</x>
     <y>55</y>
     <width>205</width>
