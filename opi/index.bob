@@ -42,7 +42,7 @@
         <target>tab</target>
         <description>Open Display</description>
         <macros>
-          <P>BL01T-EA-TST-02</P>
+          <P>BL01T-EA-TEST-01</P>
           <R>:DET:</R>
         </macros>
       </action>
@@ -71,7 +71,7 @@
         <target>tab</target>
         <description>Open Display</description>
         <macros>
-          <P>BL01T-EA-TST-02</P>
+          <P>BL01T-EA-TEST-01</P>
           <R>:PVA:</R>
         </macros>
       </action>
