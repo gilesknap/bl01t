@@ -14,19 +14,19 @@ services:
       version: 0.1.0
 
     environment:
-      IOCSH_PS1: ${IOC_NAME} >
-      IOC_NAME: ${IOC_NAME}
-      IOC_PREFIX: $IOC_PREFIX
+      IOCSH_PS1: bl01t-di-cam-01 >
+      IOC_NAME: bl01t-di-cam-01
+      IOC_PREFIX: BL01T-DI-CAM-01
 
     volumes:
       - type: volume
         source: opi_auto
         target: /epics/opi
         volume:
-          subpath: ${IOC_NAME}
+          subpath: bl01t-di-cam-01
 
     configs:
-      - source: ${IOC_NAME}_config
+      - source: bl01t-di-cam-01_config
         target: epics/ioc/config
 
 configs:
