@@ -7,6 +7,7 @@ services:
       file: ../../include/ioc.yml
 
     image: ghcr.io/epics-containers/ioc-adsimdetector-runtime:2024.6.1
+    container_name: ${IOC_NAME}
 
     labels:
       # this should be incremented when changes are made to this file
