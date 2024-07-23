@@ -11,6 +11,7 @@
 ROOT=$(realpath $(dirname ${0})/../..)
 set -xe
 
+
 # use docker if available else use podman
 if ! docker version &>/dev/null; then docker=podman; else docker=docker; fi
 
@@ -22,15 +23,22 @@ do
     fi
 
     # Get the container image that this service uses from values.yaml if supplied
-    image=$(cat ${service}/compose.yaml | sed -rn 's/^ +image: (.*)/\1/p')
+    image=$(cat ${service}/compose.yml | sed -rn 's/^ +image: (.*)/\1/p')
 
     if [ -n "${image}" ]; then
         echo "Validating ${service} with ${image}"
 
+        runtime=/tmp/ioc-runtime/$(basename ${service})
+        mkdir -p ${runtime}
+
         # This will fail and exit if the ioc.yaml is invalid
         $docker run --rm --entrypoint bash \
-            -v ${service}/config:/config ${image} \
+            -v ${service}/config:/config \
+            -v ${runtime}:/epics/runtime \
+            ${image} \
             -c 'ibek runtime generate /config/ioc.yaml /epics/ibek-defs/*'
+        # show the startup script we just generated (and verify it exists)
+        cat  ${runtime}/st.cmd
 
     fi
 done
