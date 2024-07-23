@@ -22,7 +22,7 @@ do
     fi
 
     # Get the container image that this service uses from values.yaml if supplied
-    image=$(cat ${service}/values.yaml | sed -rn 's/^ +image: (.*)/\1/p')
+    image=$(cat ${service}/compose.yaml | sed -rn 's/^ +image: (.*)/\1/p')
 
     if [ -n "${image}" ]; then
         echo "Validating ${service} with ${image}"

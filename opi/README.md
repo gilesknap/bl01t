@@ -17,5 +17,4 @@ In this repository there are two opi folders:
 - opi - This folder is a place for hand coded bob files that are copied into
   the opi volume by the init container [init.yaml](../include/init.yaml).
 
-  The contents of this folder are committed in to git. For this reason it is
-  found in .gitignore.
+  The contents of this folder are committed in to git.
