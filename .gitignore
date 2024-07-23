@@ -4,3 +4,7 @@
 venv*
 .venv*
 *workspace
+
+# this is the root directory for generated opi files
+# and is created at runtime
+services/opi

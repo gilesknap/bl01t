@@ -17,11 +17,7 @@ services:
       IOC_PREFIX: BL01T-EA-TEST-01
 
     volumes:
-      - type: volume
-        source: opi_auto
-        target: /epics/opi
-        volume:
-          subpath: bl01t-ea-test-01
+      - ../opi/bl01t-ea-test-01:/epics/opi
 
     configs:
       - source: bl01t-ea-test-01_config

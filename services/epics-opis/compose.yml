@@ -16,7 +16,7 @@ services:
       - channel_access
 
     volumes:
-      - opi:/opi
+      - ../opi:/opi
 
     profiles:
       - deploy

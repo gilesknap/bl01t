@@ -18,10 +18,10 @@ include:
   # all profiles
   - services/bl01t-ea-test-01/compose.yml
   - services/bl01t-di-cam-01/compose.yml
+  - services/gateway/compose.yml
 
   # develop profile only
   - services/phoebus/compose.yml
 
   # deploy profile only
-  - services/gateway/compose.yml
   - services/epics-opis/compose.yml
