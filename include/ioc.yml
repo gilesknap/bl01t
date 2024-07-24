@@ -5,9 +5,6 @@
 services:
   # linux IOCs that run in a container #########################################
   linux_ioc: &linux_ioc
-    depends_on:
-      - init_iocs
-
     labels:
       # a reference to which repository created this IOC
       ioc_group: bl01t

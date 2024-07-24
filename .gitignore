@@ -6,5 +6,6 @@ venv*
 *workspace
 
 # this is the root directory for generated opi files
-# and is created at runtime
-services/opi
+# and is created at runtime by IOCs using PVI
+opi/iocs
+!opi/iocs/README.md

@@ -6,12 +6,12 @@ description: Example simulated camera for BL01T
 entities:
   - type: ADSimDetector.simDetector
     PORT: DET.DET
-    P: BL01T-EA-TST-01
+    P: BL01T-DI-CAM-01
     R: ":DET:"
 
   - type: ADCore.NDPvaPlugin
     PORT: DET.PVA
-    PVNAME: BL01T-EA-TST-01:PVA:OUTPUT
-    P: BL01T-EA-TST-01
+    PVNAME: BL01T-DI-CAM-01:PVA:OUTPUT
+    P: BL01T-DI-CAM-01
     R: ":PVA:"
     NDARRAY_PORT: DET.DET
