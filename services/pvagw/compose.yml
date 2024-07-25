@@ -1,0 +1,52 @@
+#  Configure a pvagw so that the PVA plugin image stream can be accessed
+
+services:
+
+  # local pvagw for development ################################################
+
+  pvagw-develop: &pvagw
+
+    image: ghcr.io/epics-containers/ec-p4p:4.1.12ec1
+
+    expose:
+      - 5075-5076/udp
+      - 5075-5076
+
+    ports:
+      # bind to localhost to isolate channel access to this host only
+      - 127.0.0.1:5075:5075/udp
+      - 127.0.0.1:5075-5076:5075-5076
+
+    restart: unless-stopped
+
+    networks:
+      channel_access:
+        ipv4_address: 172.20.255.250
+
+    configs:
+      - source: pvagw_config
+        target: /config
+
+    command: -c "pvagw /config/pvagw.config" --debug
+
+    profiles:
+      - develop
+
+  # per server pvagw for deployment #############################################
+  pvagw-deploy:
+
+    <<: *pvagw
+
+    ports:
+    # TODO investigate how to configure this for deployment
+    - 127.0.0.1:5075:5075/udp
+    - 127.0.0.1:5075-5076:5075-5076
+
+    command: -c "pvagw /config/pvagw.config"
+
+    profiles:
+      - deploy
+
+configs:
+  pvagw_config:
+    file: ./config
