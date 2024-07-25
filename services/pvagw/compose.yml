@@ -9,13 +9,13 @@ services:
     image: ghcr.io/epics-containers/ec-p4p:4.1.12ec1
 
     expose:
-      - 5075-5076/udp
-      - 5075-5076
+      - 5076/udp
+      - 5075
 
     ports:
       # bind to localhost to isolate channel access to this host only
-      - 127.0.0.1:5075:5075/udp
-      - 127.0.0.1:5075-5076:5075-5076
+      - 127.0.0.1:5076:5076/udp
+      - 127.0.0.1:5075:5075
 
     restart: unless-stopped
 
@@ -27,7 +27,7 @@ services:
       - source: pvagw_config
         target: /config
 
-    command: -c "pvagw /config/pvagw.config" --debug
+    command: -c "pvagw /config/pvagw.config --debug"
 
     profiles:
       - develop
@@ -39,8 +39,8 @@ services:
 
     ports:
     # TODO investigate how to configure this for deployment
-    - 127.0.0.1:5075:5075/udp
-    - 127.0.0.1:5075-5076:5075-5076
+    - 127.0.0.1:5076:5076/udp
+    - 127.0.0.1:5075:5075
 
     command: -c "pvagw /config/pvagw.config"
 

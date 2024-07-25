@@ -30,9 +30,13 @@ services:
 
     # for docker use 'networks: [channel_access]'
     # for podman at DLS use 'network_mode: host'
-    # network_mode: host
-    networks:
-      - channel_access
+    # or for both use 'networks: [channel_access]'
+    #    and ca-gateway + pvagw
+    network_mode: host
+
+    # TODO TEMPORARY until we get pva gateway working
+    # networks:
+    #   - channel_access
 
     expose:
       - "5064-5065/udp"
