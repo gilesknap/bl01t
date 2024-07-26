@@ -99,3 +99,29 @@ These goals for switching to compose have all been met:
 - structure so that there is a compose file per server
 - remove need for custom code/scripts to deploy/manage the IOCs
 - also allow PV isolation on servers with a ca-gateway to enable access
+
+# host settings to talk to the IOCs via Gateways
+
+## environment variables
+```bash
+export EPICS_CA_ADDR_LIST=127.0.0.1
+export EPICS_PVA_ADDR_LIST=127.0.0.1
+export EPICS_CA_AUTO_ADDR_LIST=NO
+export EPICS_PVA_AUTO_ADDR_LIST=NO
+```
+
+## example PVs
+```bash
+caget BL01T-DI-CAM-01:DET:MaxSizeX_RBV
+
+pvget BL01T-DI-CAM-01:PVA:OUTPUT
+```
+
+## environment to test gateways inside the container network
+
+```bash
+export EPICS_CA_ADDR_LIST=172.20.255.254
+export EPICS_PVA_ADDR_LIST=172.20.255.250
+export EPICS_CA_AUTO_ADDR_LIST=NO
+export EPICS_PVA_AUTO_ADDR_LIST=NO
+```
