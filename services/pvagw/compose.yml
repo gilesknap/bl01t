@@ -45,7 +45,7 @@ services:
     command: -c "pvagw /config/pvagw.config"
 
     profiles:
-      - deploy
+      - removed_due_to_networking_issue
 
 configs:
   pvagw_config:
