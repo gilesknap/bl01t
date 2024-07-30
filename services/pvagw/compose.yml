@@ -30,7 +30,10 @@ services:
     command: -c "pvagw /config/pvagw.config --debug"
 
     profiles:
-      - develop
+    # PVAcess cannot set up channels into a container yet, so we are using
+    # ndstdarrys instead of ndpva for now
+    # https://github.com/epics-base/pvAccessCPP/issues/197
+      - removed
 
   # per server pvagw for deployment #############################################
   pvagw-deploy:
